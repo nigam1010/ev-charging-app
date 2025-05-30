@@ -43,8 +43,8 @@
             <td>{{ station.powerOutput }} kW</td>
             <td>{{ station.connectorType }}</td>
             <td>
-              <button @click="editStation(station)">Edit</button>
-              <button @click="deleteStation(station.id)" class="danger">Delete</button>
+              <button @click="editStation(station)">✏️ Edit</button>
+              <button @click="deleteStation(station.id)" class="danger">🗑️ Delete</button>
             </td>
           </tr>
         </tbody>
@@ -78,7 +78,7 @@ export default {
       return this.editingId !== null;
     }
   },
-  async created() {
+  created() {
     this.fetchStations();
   },
   methods: {
@@ -113,11 +113,13 @@ export default {
       }
     },
     async deleteStation(id) {
-      try {
-        await axios.delete(`/stations/${id}`);
-        this.fetchStations();
-      } catch (err) {
-        this.error = 'Failed to delete charger';
+      if (confirm('Are you sure you want to delete this charger?')) {
+        try {
+          await axios.delete(`/stations/${id}`);
+          this.fetchStations();
+        } catch (err) {
+          this.error = 'Failed to delete charger';
+        }
       }
     },
     cancelEdit() {
