@@ -9,7 +9,10 @@ dotenv.config();
 const app = express();
 
 // ✅ Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://ev-charging-app-eight.vercel.app', // exact Vercel URL
+  credentials: true
+}));
 app.use(express.json()); // Parses incoming JSON payloads
 
 // ✅ Routes
