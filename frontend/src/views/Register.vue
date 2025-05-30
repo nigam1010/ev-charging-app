@@ -1,74 +1,83 @@
 <template>
-  <div class="auth-container">
-    <h2>📝 Create Account</h2>
-    <form @submit.prevent="register">
-      <input v-model="form.username" placeholder="Username" required />
-      <input v-model="form.email" type="email" placeholder="Email" required />
-      <input v-model="form.password" type="password" placeholder="Password" required />
-      <button type="submit">Register</button>
-    </form>
-    <p v-if="error" class="error">{{ error }}</p>
-    <p class="switch">Already have an account? <router-link to="/login">Login</router-link></p>
+  <div class="register-page">
+    <div class="register-card">
+      <h2>📝 Create Account</h2>
+      <form @submit.prevent="handleRegister">
+        <input v-model="form.username" placeholder="Username" required />
+        <input v-model="form.email" type="email" placeholder="Email" required />
+        <input v-model="form.password" type="password" placeholder="Password" required />
+        <button type="submit">Register</button>
+        <p class="redirect">
+          Already have an account? <router-link to="/login">Login</router-link>
+        </p>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from '@/axios'
-
 export default {
-  name: 'RegisterView',
   data() {
     return {
       form: {
         username: '',
         email: '',
         password: ''
-      },
-      error: ''
-    }
+      }
+    };
   },
   methods: {
-    async register() {
-      try {
-        await axios.post('/auth/register', this.form)
-        this.$router.push('/login')
-      } catch (err) {
-        this.error = err.response?.data?.msg || 'Registration failed'
-      }
+    async handleRegister() {
+      // your registration logic
     }
   }
-}
+};
 </script>
 
 <style scoped>
-.auth-container {
-  max-width: 400px;
-  margin: auto;
-  padding: 2rem;
+.register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #fdfdfd;
+}
+
+.register-card {
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.05);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 400px;
   text-align: center;
 }
+
 input {
-  display: block;
   width: 100%;
   padding: 0.6rem;
-  margin: 0.5rem 0;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
+
 button {
   width: 100%;
   padding: 0.7rem;
-  background-color: #1e1e2f;
+  background: #111;
   color: white;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
+  transition: 0.3s;
 }
-.error {
-  color: red;
-  margin-top: 1rem;
+
+button:hover {
+  background: #222;
 }
-.switch {
+
+.redirect {
   margin-top: 1rem;
+  font-size: 0.9rem;
 }
 </style>
