@@ -3,8 +3,8 @@
     <h2>🛠️ Manage Chargers</h2>
 
     <div class="form-card">
-      <h3>Add New Charger</h3>
-      <form @submit.prevent="addCharger" class="form">
+      <h3>{{ editMode ? 'Edit Charger' : 'Add New Charger' }}</h3>
+      <form @submit.prevent="editMode ? updateCharger() : addCharger()" class="form">
         <input v-model="form.name" placeholder="Name" required />
         <input v-model="form.latitude" placeholder="Latitude" type="number" required />
         <input v-model="form.longitude" placeholder="Longitude" type="number" required />
@@ -15,7 +15,8 @@
         </select>
         <input v-model="form.powerOutput" placeholder="Power Output (kW)" type="number" required />
         <input v-model="form.connectorType" placeholder="Connector Type" required />
-        <button type="submit">Add Charger</button>
+        <button type="submit">{{ editMode ? 'Update' : 'Add' }} Charger</button>
+        <button v-if="editMode" type="button" @click="cancelEdit" class="cancel-btn">Cancel</button>
       </form>
     </div>
 
@@ -31,6 +32,7 @@
             <th>Status</th>
             <th>Power Output</th>
             <th>Connector Type</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -40,6 +42,10 @@
             <td>{{ station.status }}</td>
             <td>{{ station.powerOutput }} kW</td>
             <td>{{ station.connectorType }}</td>
+            <td>
+              <button @click="editStation(station)">Edit</button>
+              <button @click="deleteStation(station.id)" class="danger">Delete</button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -63,8 +69,14 @@ export default {
         powerOutput: '',
         connectorType: ''
       },
+      editingId: null,
       error: ''
     };
+  },
+  computed: {
+    editMode() {
+      return this.editingId !== null;
+    }
   },
   async created() {
     this.fetchStations();
@@ -81,18 +93,46 @@ export default {
     async addCharger() {
       try {
         await axios.post('/stations', this.form);
-        this.form = {
-          name: '',
-          latitude: '',
-          longitude: '',
-          status: '',
-          powerOutput: '',
-          connectorType: ''
-        };
+        this.resetForm();
         this.fetchStations();
       } catch (err) {
         this.error = 'Failed to add charger';
       }
+    },
+    editStation(station) {
+      this.form = { ...station };
+      this.editingId = station.id;
+    },
+    async updateCharger() {
+      try {
+        await axios.put(`/stations/${this.editingId}`, this.form);
+        this.resetForm();
+        this.fetchStations();
+      } catch (err) {
+        this.error = 'Failed to update charger';
+      }
+    },
+    async deleteStation(id) {
+      try {
+        await axios.delete(`/stations/${id}`);
+        this.fetchStations();
+      } catch (err) {
+        this.error = 'Failed to delete charger';
+      }
+    },
+    cancelEdit() {
+      this.resetForm();
+    },
+    resetForm() {
+      this.form = {
+        name: '',
+        latitude: '',
+        longitude: '',
+        status: '',
+        powerOutput: '',
+        connectorType: ''
+      };
+      this.editingId = null;
     }
   }
 };
@@ -148,6 +188,24 @@ button {
 
 button:hover {
   background-color: #444;
+}
+
+button.danger {
+  background-color: #e74c3c;
+  margin-left: 5px;
+}
+
+button.danger:hover {
+  background-color: #c0392b;
+}
+
+button.cancel-btn {
+  background-color: #999;
+  margin-left: 5px;
+}
+
+button.cancel-btn:hover {
+  background-color: #777;
 }
 
 table {
