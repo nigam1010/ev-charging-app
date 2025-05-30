@@ -6,6 +6,7 @@ A full-stack web application for managing and monitoring EV charging stations. B
 🔗 EV Charging App
 
 (https://ev-charging-app-eight.vercel.app)
+
 👉 Note: First register a new account, then use those credentials to log in.
 
 ---
