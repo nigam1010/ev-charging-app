@@ -1,4 +1,3 @@
-<!-- Login.vue -->
 <template>
   <div class="auth-container">
     <h2>🔐 Login to Your Account</h2>
