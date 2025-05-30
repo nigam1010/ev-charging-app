@@ -1,8 +1,9 @@
+<!-- Login.vue -->
 <template>
   <div class="auth-container">
     <h2>🔐 Login to Your Account</h2>
     <form @submit.prevent="login">
-      <input v-model="form.identifier" placeholder="Email or Username" required />
+      <input v-model="form.username" placeholder="Email or Username" required />
       <input v-model="form.password" type="password" placeholder="Password" required />
       <button type="submit">Login</button>
     </form>
@@ -19,7 +20,7 @@ export default {
   data() {
     return {
       form: {
-        identifier: '',
+        username: '',
         password: ''
       },
       error: ''
@@ -32,7 +33,7 @@ export default {
         localStorage.setItem('token', res.data.token)
         this.$router.push('/dashboard')
       } catch (err) {
-        this.error = err.response?.data?.msg || 'Login failed'
+        this.error = 'Login failed'
       }
     }
   }
@@ -42,11 +43,11 @@ export default {
 <style scoped>
 .auth-container {
   max-width: 400px;
-  margin: auto;
+  margin: 100px auto;
   padding: 2rem;
   background: white;
   border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.05);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
   text-align: center;
 }
 input {
