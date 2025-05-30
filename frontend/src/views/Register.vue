@@ -16,7 +16,7 @@
 import axios from '@/axios'
 
 export default {
-  name: 'Register',
+  name: 'RegisterView',
   data() {
     return {
       form: {
