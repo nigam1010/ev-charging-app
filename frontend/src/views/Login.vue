@@ -1,73 +1,82 @@
 <template>
-  <div class="auth-container">
-    <h2>🔐 Login to Your Account</h2>
-    <form @submit.prevent="login">
-      <input v-model="form.identifier" placeholder="Email or Username" required />
-      <input v-model="form.password" type="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form>
-    <p v-if="error" class="error">{{ error }}</p>
-    <p class="switch">Don't have an account? <router-link to="/register">Register</router-link></p>
+  <div class="login-page">
+    <div class="login-card">
+      <h2>🔐 Login to Your Account</h2>
+      <form @submit.prevent="handleLogin">
+        <input v-model="form.username" placeholder="Email or Username" required />
+        <input v-model="form.password" placeholder="Password" type="password" required />
+        <button type="submit">Login</button>
+        <p class="redirect">
+          Don’t have an account?
+          <router-link to="/register">Register</router-link>
+        </p>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from '@/axios'
-
 export default {
-  name: 'LoginView',
   data() {
     return {
       form: {
-        identifier: '',
+        username: '',
         password: ''
-      },
-      error: ''
-    }
+      }
+    };
   },
   methods: {
-    async login() {
-      try {
-        const res = await axios.post('/auth/login', this.form)
-        localStorage.setItem('token', res.data.token)
-        this.$router.push('/dashboard')
-      } catch (err) {
-        this.error = err.response?.data?.msg || 'Login failed'
-      }
+    async handleLogin() {
+      // your login logic
     }
   }
-}
+};
 </script>
 
 <style scoped>
-.auth-container {
-  max-width: 400px;
-  margin: auto;
-  padding: 2rem;
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #fdfdfd;
+}
+
+.login-card {
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.05);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 400px;
   text-align: center;
 }
+
 input {
-  display: block;
   width: 100%;
   padding: 0.6rem;
-  margin: 0.5rem 0;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
+
 button {
   width: 100%;
   padding: 0.7rem;
-  background-color: #1e1e2f;
+  background: #111;
   color: white;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
+  transition: 0.3s;
 }
-.error {
-  color: red;
-  margin-top: 1rem;
+
+button:hover {
+  background: #222;
 }
-.switch {
+
+.redirect {
   margin-top: 1rem;
+  font-size: 0.9rem;
 }
 </style>
