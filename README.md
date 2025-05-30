@@ -2,6 +2,11 @@
 
 A full-stack web application for managing and monitoring EV charging stations. Built with **Vue.js** (frontend) and **Node.js + Express + MySQL** (backend). Deployed from a **monorepo**.
 
+##🚀 Live Demo
+🔗 EV Charging App
+(https://ev-charging-app-eight.vercel.app)
+👉 Note: First register a new account, then use those credentials to log in.
+
 ---
 
 ## 📁 Folder Structure
