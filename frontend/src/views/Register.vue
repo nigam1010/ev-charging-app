@@ -10,8 +10,7 @@
       </form>
       <p v-if="error" class="error">{{ error }}</p>
       <p class="switch">
-        Already have an account?
-        <router-link to="/login">Login</router-link>
+        Already have an account? <router-link to="/login">Login</router-link>
       </p>
     </div>
   </div>
