@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar v-if="!$route.path.includes('/login')" />
+    <Navbar v-if="!hideNavbar" />
     <router-view />
   </div>
 </template>
@@ -9,8 +9,11 @@
 import Navbar from './components/Navbar.vue';
 
 export default {
-  components: {
-    Navbar
+  components: { Navbar },
+  computed: {
+    hideNavbar() {
+      return ['/login', '/register'].includes(this.$route.path);
+    }
   }
 };
 </script>
