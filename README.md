@@ -96,3 +96,12 @@ App runs at `http://localhost:8080`
 ## 📄 License
 
 MIT License. Open-source and free to use.
+
+## .env for safer side
+DB_HOST=metro.proxy.rlwy.net
+DB_PORT=40416
+DB_USER=root
+DB_PASSWORD=BtOszafGKyZcfXlHRkIXyJEsMvhqLQkJ
+DB_NAME=railway
+JWT_SECRET=supersecretkey123
+
