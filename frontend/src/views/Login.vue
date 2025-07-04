@@ -19,8 +19,8 @@ export default {
   data() {
     return {
       form: {
-        identifier: '',
-        password: ''
+        identifier: 'demo@example.com', // Prebuilt credential
+        password: 'password123'         // Prebuilt credential
       },
       error: ''
     };
@@ -35,6 +35,10 @@ export default {
         this.error = err.response?.data?.msg || 'Login failed';
       }
     }
+  },
+  mounted() {
+    // Optional: auto-login on mount
+    // this.login();
   }
 };
 </script>
