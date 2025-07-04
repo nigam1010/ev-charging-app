@@ -12,36 +12,31 @@
 </template>
 
 <script>
-import axios from '@/axios';
-
 export default {
   name: 'LoginView',
   data() {
     return {
       form: {
-        identifier: 'demo@example.com', // Prebuilt credential
-        password: 'password123'         // Prebuilt credential
+        identifier: 'demo@example.com',
+        password: 'password123'
       },
       error: ''
     };
   },
   methods: {
-    async login() {
-      try {
-        const res = await axios.post('/auth/login', this.form);
-        localStorage.setItem('token', res.data.token);
-        this.$router.push('/dashboard');
-      } catch (err) {
-        this.error = err.response?.data?.msg || 'Login failed';
-      }
+    login() {
+      // Bypass actual login and simulate token
+      localStorage.setItem('token', 'demo-token');
+      this.$router.push('/dashboard');
     }
   },
   mounted() {
-    // Optional: auto-login on mount
+    // Optional: uncomment to auto-redirect without user clicking
     // this.login();
   }
 };
 </script>
+
 
 <style scoped>
 .auth-container {
